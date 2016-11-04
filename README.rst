@@ -17,7 +17,7 @@ schrodinger
      :target: https://pyup.io/repos/github/xinbian/schrodinger/
      :alt: Updates
 
-.. image:: https://coveralls.io/repos/github/xinbian/schrodinger/badge.svg?branch=master
+.. image:: https://coveralls.io/repos/github/xinbian/schrodinger/badge.png?branch=master
       :target: https://coveralls.io/github/xinbian/schrodinger?branch=master
 
 a project of schrodinger equation
