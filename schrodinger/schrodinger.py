@@ -8,55 +8,54 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 import os.path
-import pylab
 parent = os.path.abspath(os.path.join(os.path.dirname(__file__),'.'))
 sys.path.append(parent)
 
 #first function, calculate coefficients for fourier series
 #the basis set function {constant, cos kx, sin kx}, where k=1, 2, 3, ...
 
-#period. now assume domain is (0, period)
-period=2*np.pi
+#period. now assume domain is (-period/2, period/2) e,g.(-1,1) in this case
+period=2
+#generate wave function
 time=np.linspace(-period/2,period/2,100)
-y=np.sin(time)
-#resol is the basis function set length (need to plus1 for the real length if dft)
+y=np.sin(2*np.pi*time/period)
+#resol is the basis function set length (need to plus 1 for the real length)
 resol=50
-#vx is potential function
-vx=2
+#vx is potential function, use constant here
+vx=0
 #c is a constant
-c=3
-#basis function type
+c=1
+#basis function type 1 for fourrier, 2 for lengendre
 basis=2
 
 #store coeffcient and basis function
-#wave function coefficients
+#initial wave function coefficients
 psi_cf=np.zeros(resol+1, dtype=np.complex64)
 #wave function after opearator cofficients
 #psi_after_cf=np.zeros(resol+1, dtype=np.complex64)
-#opearator matrix
+#initial opearator matrix
 hamilton=np.zeros((resol+1, resol+1),dtype=np.complex64)
 
-
+#the function used to calcuate coefficient for fourrier serises
 def cn(y, n, basis):
-    #fourrier serises branch
+    #fourrier serises branch, calculate inner product
     if basis==1:
         c = y*np.exp(-1j*2*n*np.pi*time/period)
         return c.sum()/c.size  
     
-
-
-#store cn(i) in a list, the first one is for constant coeffcients
+#store cn(i) in a list, the first one is for constant basis function 
 def wave_cf(x, y, basis, resol):
-    # calculate constant coefficient for fourrier serises 
+    # calculate coefficient for fourrier serises 
     if basis==1:
       psi_cf=np.zeros(resol+1, dtype=np.complex64)
       for i in range(1, resol+1):
          psi_cf[i]=cn(y, i, basis)
+      # the first one is coefficient for constant basis function 
       psi_cf[0]=y.sum()/y.size
       return psi_cf
-     #legendre branch
+    #legendre branch, use built in function
     else:
-      return np.polynomial.legendre.legfit(time, y, resol)
+      return np.polynomial.legendre.legfit(x, y, resol)
 
 #calculate hamilton matrix
 def hamilton_matrix(basis, resol):
@@ -68,10 +67,10 @@ def hamilton_matrix(basis, resol):
 #calculate coeffcient after opearator
 temp=0j
 if basis==1:
+ #initial the coeffcient after opearator
  psi_after_cf=np.zeros(resol+1, dtype=np.complex64)
  for i in range(1,resol+1):
-    for j in range(1,resol+1):
-    
+    for j in range(1,resol+1):  
            temp=temp+hamilton_matrix(basis, resol)[i][j]*wave_cf(time, y, basis, resol)[j]
     psi_after_cf[i]=temp
     temp=0j
