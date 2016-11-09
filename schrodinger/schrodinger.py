@@ -22,7 +22,7 @@ y=np.sin(2*np.pi*time/period)
 #resol is the basis function set length (need to plus 1 for the real length)
 resol=50
 #vx is potential function, use constant here
-vx=0
+vx=2
 #c is a constant
 c=1
 #basis function type 1 for fourrier, 2 for lengendre
@@ -35,13 +35,7 @@ psi_cf=np.zeros(resol+1, dtype=np.complex64)
 #psi_after_cf=np.zeros(resol+1, dtype=np.complex64)
 #initial opearator matrix
 hamilton=np.zeros((resol+1, resol+1),dtype=np.complex64)
-
-#the function used to calcuate coefficient for fourrier serises
-def cn(y, n, basis):
-    #fourrier serises branch, calculate inner product
-    if basis==1:
-        c = y*np.exp(-1j*2*n*np.pi*time/period)
-        return c.sum()/c.size  
+ 
     
 #store cn(i) in a list, the first one is for constant basis function 
 def wave_cf(x, y, basis, resol):
@@ -49,7 +43,8 @@ def wave_cf(x, y, basis, resol):
     if basis==1:
       psi_cf=np.zeros(resol+1, dtype=np.complex64)
       for i in range(1, resol+1):
-         psi_cf[i]=cn(y, i, basis)
+         cntemp= y*np.exp(-1j*2*i*np.pi*time/period)
+         psi_cf[i]=cntemp.sum()/cntemp.size  
       # the first one is coefficient for constant basis function 
       psi_cf[0]=y.sum()/y.size
       return psi_cf
@@ -65,35 +60,36 @@ def hamilton_matrix(basis, resol):
   return hamilton
 
 #calculate coeffcient after opearator
-temp=0j
-if basis==1:
- #initial the coeffcient after opearator
- psi_after_cf=np.zeros(resol+1, dtype=np.complex64)
- for i in range(1,resol+1):
-    for j in range(1,resol+1):  
-           temp=temp+hamilton_matrix(basis, resol)[i][j]*wave_cf(time, y, basis, resol)[j]
-    psi_after_cf[i]=temp
-    temp=0j
-    
-if basis==1:
-    pass
-else:
-    ctemp=wave_cf(time, y, basis, resol)
-    psi_after_cf=-c*np.polynomial.legendre.legder(ctemp, m=2, scl=1, axis=0)
-    psi_after_cf=psi_after_cf+vx*ctemp[0:resol-1]
-    
-#cder=np.polynomial.legendre.legder(c2, m=2, scl=1, axis=0)
-#y2=np.polynomial.legendre.legval(time, cder, tensor=True)
+def after_cf(basis, resol, x, y):
+    #fourrier branch
+    if basis==1:
+        temp=0j
+        #initial the coeffcient after opearator
+        psi_after_cf=np.zeros(resol+1, dtype=np.complex64)
+        for i in range(1,resol+1):
+             for j in range(1,resol+1):  
+                 temp=temp+hamilton_matrix(basis, resol)[i][j]*wave_cf(x, y, basis, resol)[j]
+             psi_after_cf[i]=temp
+             temp=0j
+        return psi_after_cf
+    #legendre branch
+    else:
+        ctemp=wave_cf(x, y, basis, resol)
+        psi_after_cf=-c*np.polynomial.legendre.legder(ctemp, m=2, scl=1, axis=0)
+        psi_after_cf=psi_after_cf+vx*ctemp[0:resol-1]
+        return psi_after_cf
+            
 
+#reconsttuct the function from basis set coeffcients (only used in fourrier series)
 def f(x, Nh, coeff):      
         f = np.array([2*coeff[i]*np.exp(1j*2*i*np.pi*x/period) for i in range(1,Nh+1)])
         return f.sum()
-
 if basis==1:    
     ctemp=wave_cf(time, y, basis, resol)
+    psi_after_cf=after_cf(basis, resol, time, y)
     y2 = np.array([f(t,resol, psi_after_cf).real for t in time])+ctemp[0]
 else:
-    y2=np.polynomial.legendre.legval(time, psi_after_cf, tensor=True)
+    y2=np.polynomial.legendre.legval(time, after_cf(basis, resol, time, y), tensor=True)
 
 plt.plot(time, y)
 plt.plot(time, y2)
