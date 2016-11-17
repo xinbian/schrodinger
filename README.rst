@@ -20,17 +20,35 @@ schrodinger
 .. image:: https://coveralls.io/repos/github/xinbian/schrodinger/badge.png?branch=master
       :target: https://coveralls.io/github/xinbian/schrodinger?branch=master
 
-a project of schrodinger equation
-
+This is a project of Schrodinger equation
 
 * Free software: MIT license
 * Documentation: https://schrodinger.readthedocs.io.
 
 
+HOW TO USE
+--------
+* Main code: run the /schrodinger/schrodinger.py use python
+* Unit test: use the following script in folder /tests/
+             nosetests --with-cov --cov-config .coveragerc --cover-html
 Features
 --------
 
-* TODO
+* The code mainly solves two problems. First, given a function, it can output the function operated by Hamilton operator. Second, the code uses variational method to find the ground state and plot the ground state (corresponding to smallest eigenvalue)
+* Fourier series and Legendre polynominals are used as basis functions
+* For simplicity, potential energy function can only be constant
+
+Methodology
+--------
+* Variational method is used. The problem can be simplified to solve the eigenvalue equation 
+.. math::
+   H\cdot C=\lambda \cdot S \cdot C
+, where :math:`H_nm=\langle \psi_i |\hat H |\psi_j \rangle`, :math:`S_nm=\langle \psi_i \psi_j \rangle`. More details can be found in `varitional method <http://www.physics.metu.edu.tr/~hande/teaching/741-lectures/lecture-01.pdf>`_.
+
+
+TODO
+--------
+* Modify potential energy to a function
 
 Credits
 ---------
@@ -39,4 +57,3 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-
