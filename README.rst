@@ -42,10 +42,10 @@ Methodology
 -----------------
 * Variational method is used. The problem can be simplified to solve the eigenvalue equation 
 
-.. math::
-   H\cdot C=\lambda \cdot S \cdot C
 
-, where :math:`H_nm=\langle \psi_i |\hat H |\psi_j \rangle`, :math:`S_nm=\langle \psi_i \psi_j \rangle`. 
+   **H** • **C** =λ • **S** • **C**
+
+, where H_nm=<φ_i | H |φ_j >, S_nm=< φ_i | φ_j >. 
 
 More details can be found in `varitional method <http://www.physics.metu.edu.tr/~hande/teaching/741-lectures/lecture-01.pdf>`_.
 
@@ -60,4 +60,4 @@ Credits
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
