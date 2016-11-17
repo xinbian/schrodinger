@@ -53,7 +53,7 @@ def f(x, resol, coeff):
         return f.sum()
         
 #calculate coefficient after operator
-def after_cf(x, y, basis, resol, T):
+def after_cf(x, y, basis, resol, T, vx):
     #Fourier branch
     if basis==1:
         temp=0j
@@ -168,14 +168,14 @@ for basis in range(1,3):
     #Fourier branch
     if basis==1:   
         #calcuate the coeffcient vector
-        psi_after_cf=after_cf(time, y, basis, resol,period)
+        psi_after_cf=after_cf(time, y, basis, resol,period, vx)
         #restore the function from basis functions
         y2 = np.array([f(t,resol, psi_after_cf).real for t in time])
         title='Fourier'
     #Legendre branch
     else:
          #calcuate the coeffcient vector
-        psi_after_cf=after_cf(time, y, basis, resol,period)
+        psi_after_cf=after_cf(time, y, basis, resol,period,vx)
         y2=np.zeros(resol+1, dtype=np.float64)
         #restore the function from basis functions
         y2 = np.real(np.polynomial.legendre.legval(time, psi_after_cf))
