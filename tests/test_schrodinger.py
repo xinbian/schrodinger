@@ -38,14 +38,15 @@ class TestSchrodinger(unittest.TestCase):
         self.assertTrue(abs(wave_cf(xx,yy,1,10,self.period)[0]),0.00001)
     #for Fourier hamilton matrix, the non-diagonal elements are 0, test sum of them should be 0
     def test_hamilton_for(self):
-        hij=hamilton_matrix(1, 10)
+        hij=hamilton_matrix(1, 10, 2)
         self.assertEqual(hij.sum()-np.matrix.trace(hij),0j)
     #test Laplacian on coeffcients
     def test_laplacian(self):
         xx=np.linspace(-1,1,20)
         yy=xx**2
+        vx=0
         #the first coeffcient should be -2 due to given function
-        self.assertTrue(abs(after_cf(xx,yy,2,10,2)[0]+2)<0.00001)
+        self.assertTrue(abs(after_cf(xx,yy,2,10,2,vx)[0]+2)<0.00001)
     #test norm matrix for Fourier
     def test_norm_for(self):
         self.assertEqual(np.real(norm_matrix(1,10,2)[5][5]),2)
