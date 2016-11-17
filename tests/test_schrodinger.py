@@ -46,6 +46,10 @@ class TestSchrodinger(unittest.TestCase):
         yy=xx**2
         #the first coeffcient should be -2 due to given function
         self.assertTrue(abs(after_cf(xx,yy,2,10,2)[0]+2)<0.00001)
+    #test norm matrix for Fourier
+    def test_norm_for(self):
+        self.assertEqual(np.real(norm_matrix(1,10,2)[5][5]),2)
+        self.assertEqual(np.real(norm_matrix(1,10,2)[1][2]),0)
     
     
 
