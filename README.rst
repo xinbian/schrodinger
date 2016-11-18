@@ -30,13 +30,15 @@ HOW TO USE
 ---------------
 * Main code: run the /schrodinger/schrodinger.py use python
 * Unit test: use the following script in folder /tests/ : nosetests --with-cov --cov-config .coveragerc --cover-html
+* Some important variables are period, period of the input function; time, independable variable domain; y, input wave function; resol, basis function set length; vx, potential energy; c, constant; basis, basis type.
 
 Features
 --------
 
 * The code mainly solves two problems. First, given a function, it can output the function operated by Hamilton operator. Second, the code uses variational method to find the ground state and plot the ground state (corresponding to smallest eigenvalue)
-* Fourier series and Legendre polynominals are used as basis functions
+* Fourier series and Legendre polynomials are used as basis functions
 * For simplicity, potential energy function can only be constant
+* If potential function is a constant, the ground state should be 1 (after normalization), the default output has the same result. However, if we change the resol (resolution), the ground state of Legendre will change. Sometimes it can output the right results, sometimes not. I think this the right results will be extracted if an infinite resolution is used. 
 
 Methodology
 -----------------
@@ -47,7 +49,7 @@ Methodology
 
 , where H_nm=<φ_i | H |φ_j >, S_nm=< φ_i | φ_j >. 
 
-More details can be found in `varitional method <http://www.physics.metu.edu.tr/~hande/teaching/741-lectures/lecture-01.pdf>`_.
+More details can be found in `variational method <http://www.physics.metu.edu.tr/~hande/teaching/741-lectures/lecture-01.pdf>`_.
 
 
 TODO
