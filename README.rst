@@ -38,7 +38,7 @@ Features
 * The code mainly solves two problems. First, given a function, it can output the function operated by Hamilton operator. Second, the code uses variational method to find the ground state and plot the ground state (corresponding to smallest eigenvalue)
 * Fourier series and Legendre polynomials are used as basis functions
 * For simplicity, potential energy function can only be constant
-* If potential function is a constant, the ground state should be 1 (after normalization), the default output has the same result. However, if we change the resol (resolution), the ground state of Legendre will change. Sometimes it can output the right results, sometimes not. I think this the right results will be extracted if an infinite resolution is used. 
+* If potential function is a constant, the ground state should be 1 (after normalization), the default output has the same result. However, if we change the resol (resolution), the ground state of Legendre will change. Sometimes it can output the right results, sometimes not. I think the right results can be extracted when an infinite resolution is used. 
 
 Methodology
 -----------------
