@@ -1,5 +1,5 @@
 ===============================
-schrodinger
+Schrodinger solver
 ===============================
 
 
@@ -20,7 +20,7 @@ schrodinger
 .. image:: https://coveralls.io/repos/github/xinbian/schrodinger/badge.png?branch=master
       :target: https://coveralls.io/github/xinbian/schrodinger?branch=master
 
-This is a project of Schrodinger equation
+This code solves Schrodinger’s Equation using multiple basis sets: Fourier and Legendre Polynomials. See more details in problem_description.
 
 * Free software: MIT license
 * Documentation: https://schrodinger.readthedocs.io.
